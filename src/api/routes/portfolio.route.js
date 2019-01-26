@@ -16,4 +16,12 @@ router
    */
   .get(controller.getPortfolio);
 
+router
+  .route('/getHoldings')
+  .get(controller.getHoldings);
+
+router
+  .route('/getReturns')
+  .get(controller.getReturns);
+
 module.exports = router;
