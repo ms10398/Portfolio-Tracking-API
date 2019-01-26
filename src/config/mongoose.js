@@ -11,8 +11,6 @@ mongoose.connection.on('error', (err) => {
 
 mongoose.connection.on('connected', () => logger.info('MongoDB Connected'));
 
-mongoose.set('debug', true);
-
 exports.connect = () => {
   mongoose.connect(mongo, {
     keepAlive: 1,
