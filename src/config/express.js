@@ -4,7 +4,7 @@ const compress = require('compression');
 const cors = require('cors');
 const helmet = require('helmet');
 const routes = require('../api/routes');
-const logger = require('./logger')
+const logger = require('./logger');
 
 /**
 * Express instance
@@ -25,7 +25,7 @@ app.use(helmet());
 // enable CORS - Cross Origin Resource Sharing
 app.use(cors());
 
-// mount api v1 routes
+// mount api routes
 app.use('/', routes);
 
 app.use((err, req, res, next) => {
