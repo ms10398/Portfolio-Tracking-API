@@ -16,7 +16,7 @@ const options = {
     },
     schemes: ['http'],
     host: 'localhost:3000',
-    basePath: '/',
+    basePath: '/api/',
   },
   apis: ['./src/api/routes/*.route.js'],
 };

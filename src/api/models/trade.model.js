@@ -7,7 +7,7 @@ const tradeSchema = new mongoose.Schema({
     trim: true,
     required: true,
   },
-  type: {
+  action: {
     type: String,
     enum: ['buy', 'sell'],
     lowercase: true,
@@ -22,6 +22,11 @@ const tradeSchema = new mongoose.Schema({
   timestamp: {
     type: Date,
     default: Date.now(),
+    required: true,
+  },
+  price: {
+    type: Number,
+    default: 100,
     required: true,
   },
 });

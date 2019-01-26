@@ -11,27 +11,54 @@ const router = express.Router();
 
 router
   .route('/get')
+  /**
+   * @swagger
+   * /security/get:
+   *  get:
+   *    description: Fetches details of all securities
+   *    responses:
+   *      200:
+   *        description: Returns all securities
+   */
   .get(controller.get);
 
 router
   .route('/add')
   /**
    * @swagger
-   * /api/security/add:
+   * /security/add:
    *  post:
    *    description: Used to add new security
    *    responses:
    *      201:
-   *        description: Security added successfully
+   *        description: Returns added security
    */
   .post(validate(addSecurity), controller.add);
 
 router
   .route('/update/:ticker')
+  /**
+   * @swagger
+   * /security/update/:ticker:
+   *  post:
+   *    description: Used to update existing security
+   *    responses:
+   *      200:
+   *        description: Returns updated security
+   */
   .post(validate(updateSecurity), controller.update);
 
 router
   .route('/remove/:ticker')
+  /**
+   * @swagger
+   * /security/remove/:ticker:
+   *  delete:
+   *    description: Used to update existing security
+   *    responses:
+   *      200:
+   *        description: Security Removed Successfully
+   */
   .delete(validate(removeSecurity), controller.remove);
 
 

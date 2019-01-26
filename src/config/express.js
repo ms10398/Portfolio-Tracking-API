@@ -30,6 +30,7 @@ app.use('/api', routes);
 
 app.use((err, req, res, next) => {
   logger.error(err.message);
+  logger.error(err.stacktrace);
   if (!err.statusCode) err.statusCode = 500;
   res.status(err.statusCode).send(err.message);
 });

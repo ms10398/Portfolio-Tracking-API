@@ -35,8 +35,10 @@ module.exports = {
     try {
       const { ticker } = req.params;
       const security = await Security.remove({ ticker });
-      res.status(httpStatus.OK);
-      res.json(security);
+      if (security.n === 1) {
+        res.status(httpStatus.OK);
+        res.json({ message: 'Security Removed Successfully' });
+      }
     } catch (error) {
       next(error);
     }
