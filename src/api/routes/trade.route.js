@@ -23,6 +23,6 @@ router
 
 router
   .route('/remove/:id')
-  .delete(validate(removeTrade), controller.updateTrade);
+  .delete(validate(removeTrade), controller.removeTrade);
 
 module.exports = router;
