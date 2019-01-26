@@ -26,7 +26,7 @@ app.use(helmet());
 app.use(cors());
 
 // mount api routes
-app.use('/', routes);
+app.use('/api', routes);
 
 app.use((err, req, res, next) => {
   logger.error(err.message);

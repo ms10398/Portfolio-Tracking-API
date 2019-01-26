@@ -8,7 +8,16 @@ const {
 const router = express.Router();
 
 router
-  .route('/')
+  .route('/addTrade')
+  /**
+   * @swagger
+   * /addTrade:
+   *  get:
+   *    description: Used to add any trade
+   *    responses:
+   *      200:
+   *        description: Trade added successfully
+   */
   .get(validate(addTrade), controller.get);
 
 module.exports = router;
