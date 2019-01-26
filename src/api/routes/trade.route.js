@@ -9,6 +9,6 @@ const router = express.Router();
 
 router
   .route('/')
-  .get(validate(addTrade), controller.list);
+  .get(validate(addTrade), controller.get);
 
 module.exports = router;

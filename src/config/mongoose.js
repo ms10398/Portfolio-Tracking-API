@@ -9,6 +9,8 @@ mongoose.connection.on('error', (err) => {
   process.exit(-1);
 });
 
+mongoose.connection.on('connected', () => logger.info('MongoDB Connected'));
+
 mongoose.set('debug', true);
 
 exports.connect = () => {
