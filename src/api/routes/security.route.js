@@ -28,7 +28,29 @@ router
    * @swagger
    * /security/add:
    *  post:
-   *    description: Used to add new security
+   *    description: Used to add security
+   *    parameters:
+   *      - in: body
+   *        name: body
+   *        required: true
+   *        schema:
+   *          type: object
+   *          properties:
+   *            ticker:
+   *              required: true
+   *              type: string
+   *              example: TCS
+   *            name:
+   *              required: true
+   *              type: string
+   *              example: Tata Consultancy Services
+   *            price:
+   *              type: number
+   *              minimum: 0
+   *              required: true
+   *              example: 50
+   *    produces:
+   *      application/json
    *    responses:
    *      201:
    *        description: Returns added security
@@ -39,9 +61,36 @@ router
   .route('/update/:ticker')
   /**
    * @swagger
-   * /security/update/:ticker:
+   * /security/update/{ticker}:
    *  post:
-   *    description: Used to update existing security
+   *    description: Used to add security
+   *    parameters:
+   *      - in: path
+   *        name: ticker
+   *        required: true
+   *        example: TCS
+   *        type: string
+   *      - in: body
+   *        name: body
+   *        required: true
+   *        schema:
+   *          type: object
+   *          properties:
+   *            ticker:
+   *              required: true
+   *              type: string
+   *              example: TCS
+   *            name:
+   *              required: true
+   *              type: string
+   *              example: Tata Consultancy Services
+   *            price:
+   *              type: number
+   *              minimum: 0
+   *              required: true
+   *              example: 50
+   *    produces:
+   *      application/json
    *    responses:
    *      200:
    *        description: Returns updated security
@@ -52,12 +101,20 @@ router
   .route('/remove/:ticker')
   /**
    * @swagger
-   * /security/remove/:ticker:
+   * /security/remove/{ticker}:
    *  delete:
-   *    description: Used to update existing security
+   *    description: Used to add security
+   *    parameters:
+   *      - in: path
+   *        name: ticker
+   *        required: true
+   *        example: TCS
+   *        type: string
+   *    produces:
+   *      application/json
    *    responses:
    *      200:
-   *        description: Security Removed Successfully
+   *        description: Returns security removed successfully
    */
   .delete(validate(removeSecurity), controller.remove);
 

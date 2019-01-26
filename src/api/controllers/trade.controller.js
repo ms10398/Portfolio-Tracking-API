@@ -5,6 +5,7 @@ const Portfolio = require('../models/portfolio.model');
 
 module.exports = {
   addTrade: async (req, res, next) => {
+    console.log(req.body);
     try {
       const { ticker, action, quantity } = req.body;
       let portfolio;
