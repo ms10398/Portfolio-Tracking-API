@@ -1,4 +1,5 @@
 require('dotenv-safe').config({
+  // Allow empty values for heroku deployment
   allowEmptyValues: true,
 });
 

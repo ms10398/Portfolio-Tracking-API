@@ -4,7 +4,6 @@ const Security = require('../models/security.model');
 const Portfolio = require('../models/portfolio.model');
 
 module.exports = {
-
   getPortfolio: async (req, res, next) => {
     try {
       const portfolio = [];

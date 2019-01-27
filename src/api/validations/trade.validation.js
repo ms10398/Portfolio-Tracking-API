@@ -1,7 +1,6 @@
 const Joi = require('joi');
 
 module.exports = {
-
   addTrade: {
     body: {
       ticker: Joi.string().required(),

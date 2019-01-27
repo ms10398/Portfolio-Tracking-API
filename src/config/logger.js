@@ -15,5 +15,5 @@ logger.stream = {
     logger.info(message.trim());
   },
 };
-
+// Winston logger initialised and exported
 module.exports = logger;
