@@ -14,8 +14,6 @@ const options = {
         email: 'poke@thecodingninja.me',
       },
     },
-    schemes: ['http'],
-    host: 'localhost:3000',
     basePath: '/api/',
   },
   apis: ['./src/api/routes/*.route.js'],

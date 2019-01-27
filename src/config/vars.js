@@ -1,7 +1,5 @@
-const path = require('path');
-
-require('dotenv-safe').load({
-  path: path.join(__dirname, '../../.env'),
+require('dotenv-safe').config({
+  allowEmptyValues: true,
 });
 
 module.exports = {
