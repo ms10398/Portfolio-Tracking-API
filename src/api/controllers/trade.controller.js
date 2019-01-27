@@ -57,8 +57,13 @@ module.exports = {
   },
   removeTrade: async (req, res, next) => {
     try {
-      const trade = await Trade.findByIdAndDelete(req.param.id);
+      const trade = await Trade.findByIdAndDelete(req.params.id);
       console.log(trade);
+      if (trade) {
+        return res.json({ message: 'Trade removed successfully.' });
+      }
+      res.status(httpStatus.BAD_REQUEST);
+      return res.json({ message: 'Request was not completed successfully.' });
     } catch (error) {
       next(error);
     }

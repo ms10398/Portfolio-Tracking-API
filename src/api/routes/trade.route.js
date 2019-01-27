@@ -59,7 +59,9 @@ router
    *      application/json
    *    responses:
    *      200:
-   *        description: Returns trade removed successfully
+   *        description: Returns Removed Trade Successfully
+   *      400:
+   *        description: Returns Request was not completed Successfully
    */
   .delete(validate(removeTrade), controller.removeTrade);
 
