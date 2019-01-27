@@ -33,7 +33,7 @@ router
    *              enum: [buy, sell]
    *            quantity:
    *              type: number
-   *              minimum: 0
+   *              minimum: 1
    *              required: true
    *              example: 5
    *    produces:
@@ -41,11 +41,42 @@ router
    *    responses:
    *      200:
    *        description: Returns added trade
+   *      400:
+   *        description: If you don't have enough stocks or the security in your portfolio
    */
   .post(validate(addTrade), controller.addTrade);
 
 router
   .route('/update/:id')
+  /**
+   * @swagger
+   * /trade/update/{id}:
+   *  post:
+   *    description: Used to add any trade
+   *    parameters:
+   *      - in: path
+   *        name: id
+   *        required: true
+   *        type: string
+   *      - in: body
+   *        name: body
+   *        required: true
+   *        schema:
+   *          type: object
+   *          properties:
+   *            updatedQuantity:
+   *              type: number
+   *              minimum: 1
+   *              required: true
+   *              example: 5
+   *    produces:
+   *      application/json
+   *    responses:
+   *      200:
+   *        description: Returns modified trade object
+   *      400:
+   *        description: Trade cannot be udpated with the given value or trade is not found in DB
+   */
   .post(validate(updateTrade), controller.updateTrade);
 
 router
