@@ -12,7 +12,7 @@ async function buySecurity(securityObj, req, portfolio, ticker, quantity) {
   // Checking if the portfolio[ticker] has any value
   if (portfolio) {
     // Calculating Average buy price using weighted average
-    const weight = (portfolio.avgBuyPrice * portfolio.quantity + quantity * price);
+    const weight = portfolio.avgBuyPrice * portfolio.quantity + quantity * price;
     portfolio.avgBuyPrice = weight / (portfolio.quantity + quantity);
     portfolio.quantity += quantity;
     // Updating Portfolio with new trade
@@ -49,17 +49,18 @@ module.exports = {
             if (portfolio.quantity >= quantity) {
               portfolio.quantity -= quantity;
               // Updating Portfolio accordingly
-              portfolio = portfolio.quantity === 0 ? await Portfolio
-                .remove({ ticker })
-                : await Portfolio
-                  .findOneAndUpdate({ ticker }, portfolio, { new: true });
+              portfolio = portfolio.quantity === 0
+                ? await Portfolio.remove({ ticker })
+                : await Portfolio.findOneAndUpdate({ ticker }, portfolio, { new: true });
             } else {
               res.status(httpStatus.BAD_REQUEST);
-              return res.json({ message: 'Sorry, You don\'t have enough stocks in your portfolio.' });
+              return res.json({
+                message: "Sorry, You don't have enough stocks in your portfolio.",
+              });
             }
           } else {
             res.status(httpStatus.BAD_REQUEST);
-            return res.json({ message: 'Sorry, You don\'t have the security in your portfolio.' });
+            return res.json({ message: "Sorry, You don't have the security in your portfolio." });
           }
         }
       } else {
@@ -70,6 +71,73 @@ module.exports = {
       let trade = new Trade(req.body);
       trade = await trade.save();
       return res.json(trade);
+    } catch (error) {
+      next(error);
+    }
+  },
+  updateTrade: async (req, res, next) => {
+    try {
+      let trade = await Trade.findById({ _id: req.params.id });
+      if (trade) {
+        const {
+          action, price, ticker, quantity,
+        } = trade;
+        const { updatedQuantity } = req.body;
+        if (updatedQuantity === quantity) {
+          return res.json({ message: 'The quantity provided is same as before.' });
+        }
+        let newPrice;
+        const securityObj = await Security.findOne({ ticker }).select('price');
+        const currPrice = securityObj.price;
+        let portfolio = await Portfolio.findOne({ ticker });
+        let change;
+        if (portfolio) {
+          if (action === 'buy') {
+            if (updatedQuantity > quantity) {
+              change = updatedQuantity - quantity;
+              const weight = portfolio.avgBuyPrice * portfolio.quantity + change * currPrice;
+              newPrice = (quantity * price + change * currPrice) / (quantity + change);
+              portfolio.avgBuyPrice = weight / (portfolio.quantity + change);
+              portfolio.quantity += change;
+              portfolio = await Portfolio.findOneAndUpdate({ ticker }, portfolio, { new: true });
+            } else if (updatedQuantity < quantity) {
+              newPrice = price;
+              change = quantity - updatedQuantity;
+              portfolio.quantity -= change;
+              portfolio = await Portfolio.findOneAndUpdate({ ticker }, portfolio, { new: true });
+            }
+          } else if (action === 'sell') {
+            if (updatedQuantity > quantity) {
+              change = updatedQuantity - quantity;
+              if (change > portfolio.quantity) {
+                res.status(httpStatus.BAD_REQUEST);
+                return res.json({ message: 'Trade cannot be updated with the given value' });
+              }
+              newPrice = price;
+              portfolio.quantity -= change;
+              portfolio = portfolio.quantity === 0
+                ? await Portfolio.remove({ ticker })
+                : await Portfolio.findOneAndUpdate({ ticker }, portfolio, { new: true });
+            } else if (updatedQuantity < quantity) {
+              newPrice = price;
+              change = quantity - updatedQuantity;
+              portfolio.quantity += change;
+              portfolio = await Portfolio.findOneAndUpdate({ ticker }, portfolio, { new: true });
+            }
+          }
+        }
+        if (!portfolio && action === 'sell' && updatedQuantity < quantity) {
+          change = quantity - updatedQuantity;
+          portfolio = new Portfolio({ ticker, quantity: change, avgBuyPrice: price });
+          portfolio = await portfolio.save();
+        }
+        trade.price = newPrice;
+        trade.quantity = updatedQuantity;
+        trade = await Trade.findOneAndUpdate({ _id: req.params.id }, trade, { new: true });
+        return res.json(trade);
+      }
+      res.status(httpStatus.BAD_REQUEST);
+      return res.json({ message: 'There is no trade registered with the given id' });
     } catch (error) {
       next(error);
     }

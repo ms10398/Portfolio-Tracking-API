@@ -3,6 +3,7 @@ const validate = require('express-validation');
 const controller = require('../controllers/trade.controller');
 const {
   addTrade,
+  updateTrade,
   removeTrade,
 } = require('../validations/trade.validation');
 
@@ -42,6 +43,10 @@ router
    *        description: Returns added trade
    */
   .post(validate(addTrade), controller.addTrade);
+
+router
+  .route('/update/:id')
+  .post(validate(updateTrade), controller.updateTrade);
 
 router
   .route('/remove/:id')

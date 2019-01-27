@@ -5,7 +5,15 @@ module.exports = {
     body: {
       ticker: Joi.string().required(),
       action: Joi.string().valid(['buy', 'sell']).required(),
-      quantity: Joi.number().min(0).required(),
+      quantity: Joi.number().min(1).required(),
+    },
+  },
+  updateTrade: {
+    param: {
+      id: Joi.string().required(),
+    },
+    body: {
+      updatedQuantity: Joi.number().min(1).required(),
     },
   },
   removeTrade: {
