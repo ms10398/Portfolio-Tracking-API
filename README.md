@@ -3,7 +3,7 @@
 The project can be found live at [heroku](https://sheltered-brook-46322.herokuapp.com/).
 
 ### Requirements
-- Node LTS v10.5 & npm
+- Node LTS v10.5 & npm v6.0
 
 ### Technology Stack and Features:
 - **Node**
@@ -12,8 +12,8 @@ The project can be found live at [heroku](https://sheltered-brook-46322.herokuap
 - **Docker** Support
 - Request Validation with **Joi**
 - Linting with **eslint**
-- Logging with **winston** logger
-- Uses **helmet** to set some HTTP headers for security
+- Logging with **winston** logger.
+- Uses **helmet** to set some HTTP headers for security.
 - Pre-commit hook to check lint errors using **Husky**.
 - API documentation using **Swagger-jsdoc** and **Swagger UI**.
 
@@ -26,7 +26,7 @@ Make sure you have node and npm installed.
 - Set environment variables `cp .env.example .env`
 - Run `npm run dev`
 
-Dockerfile is present to build image and run container.
+Dockerfile is present to build image and run container just remember to pass the env vars for container.
 
 ### How to use:
 
@@ -62,7 +62,7 @@ You can download/import the Postman Collection from this [URL](https://www.getpo
 - Try/Catch and Promises are being used and handled properly so that app doesn't crashes.
 - `env` file is used to assign values to environment variables like `MONGO_URI`.
 - App uses async/await and latest ES6 features.
-- Seperate Express `app` and `server` which makes testing the express app easy(example by using `supertest`)
+- Seperate Express `app` and `server` which makes testing the express app easy(example by using `supertest`).
 - App follows `Fail-fast approach` and validates arguments using Joi.
 
 ### Code Style Practices:
@@ -75,7 +75,7 @@ You can download/import the Postman Collection from this [URL](https://www.getpo
 
 ### Future Improvements which can be made:
 
-- App can be run in a cluster by a process manager like pm2
+- App can be run in a cluster by a process manager like pm2.
 - Testing can be added using mocha and chai.
 - Fixtures can be used for testing purposes.
 - App structure can be changed to `component design pattern` so that scaling the application is more easy.

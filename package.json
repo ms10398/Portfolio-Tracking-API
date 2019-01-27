@@ -1,5 +1,5 @@
 {
-  "name": "smallcase-backend",
+  "name": "portfolio-tracking-api",
   "version": "0.0.1",
   "description": "A simple portfolio tracking API",
   "main": "src/index.js",
